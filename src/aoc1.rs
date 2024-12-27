@@ -1,6 +1,6 @@
 pub struct Lists {
-    list1: Vec<i32>,
-    list2: Vec<i32>,
+    left_list: Vec<i32>,
+    right_list: Vec<i32>,
 }
 
 #[derive(Debug, thiserror::Error)]
@@ -29,19 +29,42 @@ impl Lists {
             .into_iter()
             .unzip();
 
-        Ok(Lists { list1, list2 })
+        Ok(Lists {
+            left_list: list1,
+            right_list: list2,
+        })
     }
 
     fn sort(&mut self) {
-        self.list1.sort();
-        self.list2.sort();
+        self.left_list.sort();
+        self.right_list.sort();
     }
 
-    fn solve(&mut self) -> i32 {
+    fn solve_pt1(&mut self) -> i32 {
         self.sort();
         let mut res = 0;
-        for i in 0..self.list1.len() {
-            res += (self.list1[i] - self.list2[i]).abs();
+        for i in 0..self.left_list.len() {
+            res += (self.left_list[i] - self.right_list[i]).abs();
+        }
+        res
+    }
+
+    fn solve_pt_2(&mut self) -> i32 {
+        let mut visisted = std::collections::HashSet::new();
+        let mut res = 0;
+
+        for i in 0..self.left_list.len() {
+            if visisted.contains(&self.left_list[i]) {
+                continue;
+            }
+            let mut occurences = 0;
+            for j in 0..self.right_list.len() {
+                if self.left_list[i] == self.right_list[j] {
+                    occurences += 1;
+                }
+            }
+            visisted.insert(self.left_list[i]);
+            res += self.left_list[i] * occurences;
         }
         res
     }
@@ -49,7 +72,7 @@ impl Lists {
 
 pub fn solve() -> anyhow::Result<()> {
     let mut lists = Lists::init()?;
-    let res = lists.solve();
-    println!("{}", res);
+    let _res_pt1 = lists.solve_pt1();
+    let _res_pt2 = lists.solve_pt_2();
     Ok(())
 }
