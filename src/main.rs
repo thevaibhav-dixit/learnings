@@ -1,8 +1,9 @@
 #![allow(dead_code)]
+mod aoc1;
 mod dsu;
 
 fn main() {
-    {}
+    let _ = aoc1::solve();
 }
 
 fn ref_deref() {
