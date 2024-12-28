@@ -5,7 +5,7 @@ struct Reports {
 }
 
 #[derive(Debug, thiserror::Error)]
-pub enum ReportsError {
+enum ReportsError {
     #[error("IO error: {0}")]
     Io(#[from] std::io::Error),
     #[error("Parse error: {0}")]

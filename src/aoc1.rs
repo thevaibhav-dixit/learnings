@@ -1,12 +1,12 @@
 use crate::helpers::take_input;
 
-pub struct Lists {
+struct Lists {
     left_list: Vec<i32>,
     right_list: Vec<i32>,
 }
 
 #[derive(Debug, thiserror::Error)]
-pub enum ListsError {
+enum ListsError {
     #[error("IO error: {0}")]
     Io(#[from] std::io::Error),
     #[error("Parse error: {0}")]
