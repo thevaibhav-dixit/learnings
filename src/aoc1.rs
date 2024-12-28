@@ -1,3 +1,5 @@
+use crate::helpers::take_input;
+
 pub struct Lists {
     left_list: Vec<i32>,
     right_list: Vec<i32>,
@@ -13,8 +15,7 @@ pub enum ListsError {
 
 impl Lists {
     fn init() -> Result<Lists, ListsError> {
-        let input =
-            std::fs::read_to_string("/home/vaibhav/Desktop/projects/learnings/inputs/aco1.txt")?;
+        let input = take_input("aoc1.txt")?;
 
         let (list1, list2): (Vec<_>, Vec<_>) = input
             .lines()
@@ -74,5 +75,6 @@ pub fn solve() -> anyhow::Result<()> {
     let mut lists = Lists::init()?;
     let _res_pt1 = lists.solve_pt1();
     let _res_pt2 = lists.solve_pt_2();
+
     Ok(())
 }

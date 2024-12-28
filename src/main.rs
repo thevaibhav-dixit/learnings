@@ -1,9 +1,12 @@
 #![allow(dead_code)]
 mod aoc1;
+mod aoc2;
 mod dsu;
+mod helpers;
 
 fn main() {
-    let _ = aoc1::solve();
+    // let _ = aoc1::solve();
+    let _ = aoc2::solve();
 }
 
 fn ref_deref() {
