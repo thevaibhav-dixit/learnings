@@ -33,23 +33,27 @@ impl Reports {
     fn solve_pt1(&self) -> i32 {
         let mut ans = 0;
         for report in self.reports.iter() {
-            let mut valid = true;
+            if is_monotone(report.iter()) {
+                ans += 1;
+            }
+        }
+        ans
+    }
 
-            for window in report.windows(3) {
-                let (prev, curr, next) = (window[0], window[1], window[2]);
+    fn solve_pt2(&self) -> i32 {
+        let mut ans = 0;
 
-                let is_trend_consistent =
-                    (prev < curr && curr < next) || (prev > curr && curr > next);
-                let is_difference_small = (curr - prev).abs() <= 3 && (next - curr).abs() <= 3;
-
-                if !(is_trend_consistent && is_difference_small) {
-                    valid = false;
-                    break;
-                }
+        for report in self.reports.iter() {
+            if is_monotone(report.iter()) {
+                ans += 1;
+                continue;
             }
 
-            if valid {
-                ans += 1;
+            for i in 0..report.len() {
+                if is_monotone(report[..i].iter().chain(&report[i + 1..])) {
+                    ans += 1;
+                    break;
+                }
             }
         }
 
@@ -57,9 +61,38 @@ impl Reports {
     }
 }
 
+fn is_monotone<'a>(numbers: impl Iterator<Item = &'a i32>) -> bool {
+    let mut iter = numbers.peekable();
+
+    let mut prev = match iter.next() {
+        Some(&val) => val,
+        None => return true,
+    };
+
+    let mut ordering = None;
+
+    while let Some(&curr) = iter.next() {
+        if !(1..=3).contains(&(prev.abs_diff(curr))) {
+            return false;
+        }
+
+        if let Some(ord) = ordering {
+            if prev.cmp(&curr) != ord {
+                return false;
+            }
+        } else {
+            ordering = Some(prev.cmp(&curr));
+        }
+
+        prev = curr;
+    }
+
+    true
+}
 pub fn solve() -> anyhow::Result<()> {
     let reports = Reports::init()?;
-    let _ = reports.solve_pt1();
+    let _res_pt1 = reports.solve_pt1();
+    let _res_pt2 = reports.solve_pt2();
 
     Ok(())
 }
