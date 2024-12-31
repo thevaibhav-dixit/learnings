@@ -71,7 +71,7 @@ impl Lists {
     }
 }
 
-pub fn solve() -> anyhow::Result<()> {
+pub fn aoc1_solve() -> anyhow::Result<()> {
     let mut lists = Lists::init()?;
     let _res_pt1 = lists.solve_pt1();
     let _res_pt2 = lists.solve_pt_2();

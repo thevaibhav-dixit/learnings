@@ -6,9 +6,9 @@ mod dsu;
 mod helpers;
 
 fn main() {
-    // let _ = aoc1::solve();
-    // let _ = aoc2::solve();
-    let _ = aoc3::solve();
+    // let _ = aoc1::aoc1_solve();
+    // let _ = aoc2::aoc2_solve();
+    let _ = aoc3::aoc3_solve();
 }
 
 fn ref_deref() {

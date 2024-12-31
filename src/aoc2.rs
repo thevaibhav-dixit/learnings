@@ -89,7 +89,7 @@ fn is_monotone<'a>(numbers: impl Iterator<Item = &'a i32>) -> bool {
 
     true
 }
-pub fn solve() -> anyhow::Result<()> {
+pub fn aoc2_solve() -> anyhow::Result<()> {
     let reports = Reports::init()?;
     let _res_pt1 = reports.solve_pt1();
     let _res_pt2 = reports.solve_pt2();
