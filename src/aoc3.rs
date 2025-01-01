@@ -1,6 +1,5 @@
-use regex::Regex;
-
 use crate::helpers::take_input;
+use regex::Regex;
 
 pub struct Instruction(String);
 
@@ -27,7 +26,7 @@ impl Instruction {
     }
 
     fn solve_pt1(&self) -> Result<i32, InstructionError> {
-        let re = Regex::new(r"mul\((\d+),(\d+)\)").unwrap();
+        let re = Regex::new(r"mul\((\d{1,3}),(\d{1,3})\)")?;
 
         let mut ans = 0;
         for captures in re.captures_iter(self.0.as_str()) {
@@ -48,7 +47,7 @@ impl Instruction {
     }
 
     fn solve_pt2(&self) -> Result<i32, InstructionError> {
-        let re = Regex::new(r"do\(\)|don't\(\)|mul\((\d+),(\d+)\)").unwrap();
+        let re = Regex::new(r"do\(\)|don't\(\)|mul\((\d{1,3}),(\d{1,3})\)")?;
 
         let mut ans = 0;
         let mut add = true;
