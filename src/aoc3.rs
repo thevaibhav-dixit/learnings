@@ -26,8 +26,8 @@ impl Instruction {
         Ok(Instruction(instructions))
     }
 
-    fn solve(&self) -> Result<i32, InstructionError> {
-        let re = Regex::new(r"mul\((\w+),(\w+)\)").unwrap();
+    fn solve_pt1(&self) -> Result<i32, InstructionError> {
+        let re = Regex::new(r"mul\((\d+),(\d+)\)").unwrap();
 
         let mut ans = 0;
         for captures in re.captures_iter(self.0.as_str()) {
@@ -46,11 +46,43 @@ impl Instruction {
 
         Ok(ans)
     }
+
+    fn solve_pt2(&self) -> Result<i32, InstructionError> {
+        let re = Regex::new(r"do\(\)|don't\(\)|mul\((\d+),(\d+)\)").unwrap();
+
+        let mut ans = 0;
+        let mut add = true;
+
+        for captures in re.captures_iter(self.0.as_str()) {
+            match &captures[0] {
+                "do()" => add = true,
+                "don't()" => add = false,
+                _ => {
+                    if add {
+                        let x = captures
+                            .get(1)
+                            .expect("could not find value X ")
+                            .as_str()
+                            .parse::<i32>()?;
+                        let y = captures
+                            .get(2)
+                            .expect("could not find value Y")
+                            .as_str()
+                            .parse::<i32>()?;
+                        ans += x * y;
+                    }
+                }
+            }
+        }
+
+        Ok(ans)
+    }
 }
 
 pub fn aoc3_solve() -> anyhow::Result<()> {
     let instruction = Instruction::init()?;
-    let _res = instruction.solve()?;
+    let _res = instruction.solve_pt1()?;
+    let _res2 = instruction.solve_pt2()?;
 
     Ok(())
 }
