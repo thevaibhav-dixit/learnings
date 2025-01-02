@@ -2,13 +2,15 @@
 mod aoc1;
 mod aoc2;
 mod aoc3;
+mod aoc4;
 mod dsu;
 mod helpers;
 
 fn main() {
     // let _ = aoc1::aoc1_solve();
     // let _ = aoc2::aoc2_solve();
-    let _ = aoc3::aoc3_solve();
+    // let _ = aoc3::aoc3_solve();
+    let _ = aoc4::aoc4_solve();
 }
 
 fn ref_deref() {
